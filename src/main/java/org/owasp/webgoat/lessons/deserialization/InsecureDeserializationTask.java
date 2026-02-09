@@ -40,7 +40,10 @@ public class InsecureDeserializationTask implements AssignmentEndpoint {
     b64token = token.replace('-', '+').replace('_', '/');
 
     try (ObjectInputStream ois =
-        new ObjectInputStream(new ByteArrayInputStream(Base64.getDecoder().decode(b64token)))) {
+        // Unsafe deserialization. Replace with a safe data format like JSON.
+// Example using Jackson library:
+// ObjectMapper mapper = new ObjectMapper();
+// YourSafeDTO safeObject = mapper.readValue(Base64.getDecoder().decode(b64token), YourSafeDTO.class);
       before = System.currentTimeMillis();
       Object o = ois.readObject();
       if (!(o instanceof VulnerableTaskHolder)) {
